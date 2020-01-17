@@ -1,14 +1,15 @@
 //import required packages
+import { ID, SECRET } from '../../ignore/awskey';
 var AWS = require("aws-sdk");
 
 //AWS access details
 AWS.config.update({
-  accessKeyId: "AKIAIG56TNW2D4RWBBEQ",
-  secretAccessKey: "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",
+  accessKeyId: ID,
+  secretAccessKey: SECRET,
   region: "ap-south-1"
 });
 
-const faceCheck = (id1, id2) => {
+const faceCheck = (id1, id2, props, aadhar) => {
   const params = {
     SourceImage: {
       S3Object: {
@@ -24,23 +25,7 @@ const faceCheck = (id1, id2) => {
     },
     SimilarityThreshold: 70
   };
-  /*const params = {
-    SourceImage: {
-     S3Object: {
-      Bucket: "adhaar", 
-      Name: "cat.jpg"
-     },
-    },
-    TargetImage: {
-        S3Object: {
-         Bucket: "adhaar", 
-         Name: "cat.jpg"
-        },
-       },
-    SimilarityThreshold: 70
-   };
-   */
-
+  
   //Call AWS Rekognition Class
   const rekognition = new AWS.Rekognition();
 
@@ -48,7 +33,12 @@ const faceCheck = (id1, id2) => {
   rekognition.compareFaces(params, function(err, data) {
     if (err) console.log(err, err.stack);
     // an error occurred
-    else console.log(data); // successful response
+    else { 
+      console.log(data);
+      if(data.FaceMatches.length!==0) {
+        props.navigation.navigate('Report', {adhaar: aadhar})
+      }
+     } // successful response
   });
 };
 

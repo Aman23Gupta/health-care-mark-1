@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, TextInput, StyleSheet, Dimensions, Button } from "react-native";
+import { View, Text, TextInput, StyleSheet, Dimensions } from "react-native";
 import SafeAreaView from "react-native-safe-area-view";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
@@ -14,7 +14,8 @@ const SCREEN_HEIGHT= Dimensions.get('window').height;
 class LoginScreen extends Component {
   state = {
     aadhar: "",
-    image: null
+    image: null,
+    flag: false,
   };
 
   /*faceCheck = () =>
@@ -23,11 +24,14 @@ class LoginScreen extends Component {
       `${this.state.aadhar}/${this.state.aadhar}_2.jpg`
     );*/
 
-  faceCheck = () =>
+  faceCheck = () => {
     faceCheck(
       this.state.aadhar + "/" + this.state.aadhar + "_1.jpg",
-      this.state.aadhar + "/" + this.state.aadhar + "_2.jpg"
+      this.state.aadhar + "/" + this.state.aadhar + "_2.jpg",
+      this.props,
+      this.state.aadhar
     );
+  }
 
   static navigationOptions = {
     title: "",
@@ -136,7 +140,15 @@ class LoginScreen extends Component {
                 style={{ fontSize: 35, color: "rgb(236, 113, 70)" }}
               />
             </TouchableOpacity>
-            <Button title="upload" onPress={this.uploadFile} />
+            <TouchableOpacity
+              style={{ marginTop: 20 }}
+              onPress={this.uploadFile}
+            >
+              <Ionicons
+                name="md-add-circle"
+                style={{ fontSize: 35, color: "rgb(236, 113, 70)" }}
+              />
+            </TouchableOpacity>
             <TouchableOpacity
               style={{ marginTop: 20 }}
               onPress={this.pickImage}

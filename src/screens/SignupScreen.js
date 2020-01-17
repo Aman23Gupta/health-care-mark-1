@@ -5,14 +5,14 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 //import Alert from "../components/Alert";
 import uploadFile from '../BACKEND/reg';
-import faceCheck from '../BACKEND/facematch.js';
+//import faceCheck from '../BACKEND/facematch.js';
 import * as ImagePicker from "expo-image-picker";
 import * as Permissions from "expo-permissions";
 
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
-let id;
+//let id;
 class SignupScreen extends Component {
   state = {
     name: "",

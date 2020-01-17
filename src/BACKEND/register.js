@@ -1,10 +1,9 @@
 //const fs = require('fs');
+import { ID, SECRET } from '../../ignore/awskey';
 const AWS = require('aws-sdk');
-const ID = 'AKIAIG56TNW2D4RWBBEQ';
-const SECRET = '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';
-var a = '7225819972';
+
 // The name of the bucket that you have created
-BUCKET_NAME = a;
+
 const s3 = new AWS.S3({
     accessKeyId: ID,
     secretAccessKey: SECRET

@@ -1,6 +1,5 @@
+import { ID, SECRET } from '../../ignore/awskey';
 const AWS = require("aws-sdk");
-const ID = "AKIAIG56TNW2D4RWBBEQ";
-const SECRET = "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";
 
 import { RNS3 } from "react-native-s3-upload";
 
