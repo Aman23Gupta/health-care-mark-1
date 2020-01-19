@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image,Button } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FlatList } from 'react-native-gesture-handler';
 import getURL from '../BACKEND/image';
@@ -26,7 +26,7 @@ class ReportScreen extends Component{
         var AWS = require('aws-sdk');
         var s3 = new AWS.S3({ accessKeyId: ID, secretAccessKey: SECRET, region: 'ap-south-1' });
 
-        var params = { Bucket: 'adhaar', Delimiter: '' };
+        var params = { Bucket: 'adhaar', Delimiter: '', Prefix: `${this.props.navigation.getParam('adhaar')}/` };
 
         s3.listObjectsV2(params, function (err, data) {
             if (err) console.log(err, err.stack); // an error occurred
@@ -36,7 +36,22 @@ class ReportScreen extends Component{
             } // successful response
         }.bind(this));
 
+        this.willFocusListener = this.props.navigation.addListener(
+            'willFocus',
+            () => {
+                s3.listObjectsV2(params, function (err, data) {
+                    if (err) console.log(err, err.stack); // an error occurred
+                    else {
+                        console.log(data);
+                        this.setState({ list: data.Contents });
+                    } // successful response
+                }.bind(this));
+            }
+        );
+    }
 
+    componentWillUnmount() {
+        this.willFocusListener.remove();
     }
 
     renderData = (item) => {
